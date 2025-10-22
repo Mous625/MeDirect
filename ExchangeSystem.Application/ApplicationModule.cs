@@ -9,6 +9,6 @@ public static class ApplicationModule
 {
     public static void ConfigureApplicationServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSingleton<IExchangeService, ExchangeService>();
+        services.AddScoped<ITradeService, TradeService>();
     }     
 }

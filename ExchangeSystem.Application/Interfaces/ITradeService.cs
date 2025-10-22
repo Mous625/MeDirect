@@ -2,7 +2,7 @@
 
 namespace ExchangeSystem.Application.Interfaces;
 
-public interface IExchangeService
+public interface ITradeService
 {
     Task ExecuteTrade(ExecuteTradeRequest request);
 }

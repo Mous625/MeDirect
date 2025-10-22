@@ -7,17 +7,17 @@ namespace ExchangeSystem.Host.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ExchangeController : ControllerBase
+public class TradeController : ControllerBase
 {
-    private readonly IExchangeService _exchangeService;
+    private readonly ITradeService _tradeService;
 
-    public ExchangeController(IExchangeService exchangeService)
+    public TradeController(ITradeService tradeService)
     {
-        _exchangeService = exchangeService;
+        _tradeService = tradeService;
     }
 
     [HttpPost]
-    public IActionResult GetWeatherForecast([FromBody] TradeRequest request)
+    public async Task<IActionResult> GetWeatherForecast([FromBody] TradeRequest request)
     {
         var applicationRequest = new ExecuteTradeRequest()
         {
@@ -27,8 +27,8 @@ public class ExchangeController : ControllerBase
             Price = request.Price,
         };
         
-        _exchangeService.ExecuteTrade(applicationRequest);
+        await _tradeService.ExecuteTrade(applicationRequest);
         
-        return Ok(request.Quantity);
+        return NoContent();
     }
 }

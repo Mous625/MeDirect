@@ -1,21 +1,27 @@
-﻿using ExchangeSystem.Infrastructure.Models;
+﻿using ExchangeSystem.Domain.Abstractions;
+using ExchangeSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExchangeSystem.Infrastructure.Database;
 
-public class TradeContext : DbContext
+public class TradeContext : DbContext, ITradeRepository
 {
-    private DbSet<Trade> Trades { get; set; }
+    private DbSet<Trade> Trades => Set<Trade>();
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public TradeContext(DbContextOptions<TradeContext> options)
+        : base(options) { }
+    
+    public async Task AddAsync(Trade trade)
     {
-        optionsBuilder.UseMySql("server=localhost;user=root;password=1234;database=ef", ServerVersion.AutoDetect("server=localhost;user=root;password=1234;database=ef"));
-    }
-
-    public void SaveTrade(Trade trade)
-    {
-        Trades.Add(trade);
-        SaveChangesAsync();
+        try
+        {
+            Trades.Add(trade);
+            await SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
     }
 }
 

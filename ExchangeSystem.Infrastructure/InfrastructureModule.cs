@@ -1,5 +1,6 @@
-﻿using ExchangeSystem.Application.Interfaces.InfrastructureInterfaces;
+﻿using ExchangeSystem.Domain.Abstractions;
 using ExchangeSystem.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +10,9 @@ public static class InfrastructureModule
 {
     public static void ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddSingleton<IExchangeService, DatabaseService>();
+        services.AddDbContext<TradeContext>(options => 
+            options.UseMySql(config["Database:ConnectionString"], ServerVersion.AutoDetect(config["Database:ConnectionString"])));
+        
+        services.AddScoped<ITradeRepository, TradeContext>();
     }     
 }
