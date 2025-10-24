@@ -1,5 +1,6 @@
 ﻿using ExchangeSystem.Domain.Abstractions;
 using ExchangeSystem.Infrastructure.Database;
+using ExchangeSystem.Infrastructure.Rabbit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,5 +15,7 @@ public static class InfrastructureModule
             options.UseMySql(config["Database:ConnectionString"], ServerVersion.AutoDetect(config["Database:ConnectionString"])));
         
         services.AddScoped<ITradeRepository, TradeContext>();
+
+        services.AddSingleton<IQueueServiceHandler, RabbitMqBase>();
     }     
 }

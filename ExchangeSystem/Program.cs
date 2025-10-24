@@ -1,3 +1,4 @@
+using ExchangeSystem;
 using ExchangeSystem.Application;
 using ExchangeSystem.Infrastructure;
 
@@ -12,6 +13,8 @@ builder.Services.AddControllers();
 builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
 builder.Services.ConfigureApplicationServices(builder.Configuration);
+
+builder.Services.AddHostedService<StartupWorker>();
 
 var app = builder.Build();
 

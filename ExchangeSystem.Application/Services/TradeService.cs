@@ -8,10 +8,12 @@ namespace ExchangeSystem.Application.Services;
 public class TradeService : ITradeService
 {
     private readonly ITradeRepository _tradeRepository;
+    private readonly IQueueServiceHandler _queueRepository;
     
-    public TradeService(ITradeRepository tradeRepository)
+    public TradeService(ITradeRepository tradeRepository, IQueueServiceHandler queueRepository)
     {
         _tradeRepository = tradeRepository;
+        _queueRepository = queueRepository;
     }
     
     public async Task ExecuteTrade(ExecuteTradeRequest request)
@@ -24,6 +26,7 @@ public class TradeService : ITradeService
             Symbol = request.Symbol
         };
         
-        await _tradeRepository.AddAsync(trade);
+        // await _tradeRepository.AddAsync(trade);
+        await _queueRepository.SendAsync();
     }
 }
