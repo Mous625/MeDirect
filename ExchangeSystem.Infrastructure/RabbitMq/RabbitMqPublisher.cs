@@ -1,6 +1,8 @@
 ﻿using System.Text;
 using System.Text.Json;
-using ExchangeSystem.Domain.Abstractions;
+using ExchangeSystem.Application.Exceptions;
+using ExchangeSystem.Application.Interfaces;
+using ExchangeSystem.Application.Interfaces.Infrastructure;
 using ExchangeSystem.Domain.Entities;
 using ExchangeSystem.Infrastructure.RabbitMq.Interfaces;
 using ExchangeSystem.Infrastructure.RabbitMq.Options;
@@ -39,6 +41,7 @@ internal class RabbitMqPublisher : IQueuePublisher
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured whilst publishing the trade.");
+            throw new PublishTradeFailedException();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace ExchangeSystem.Infrastructure.RabbitMq.Options;
 
-public sealed class RabbitMqOptions
+internal sealed class RabbitMqOptions
 {
     [Required] public required string ConnectionString { get; init; }
 

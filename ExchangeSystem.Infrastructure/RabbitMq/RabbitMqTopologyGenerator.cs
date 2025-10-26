@@ -1,4 +1,5 @@
 ﻿using ExchangeSystem.Application.Interfaces;
+using ExchangeSystem.Application.Interfaces.Infrastructure;
 using ExchangeSystem.Infrastructure.RabbitMq.Interfaces;
 using ExchangeSystem.Infrastructure.RabbitMq.Options;
 using Microsoft.Extensions.Options;
@@ -6,7 +7,7 @@ using RabbitMQ.Client;
 
 namespace ExchangeSystem.Infrastructure.RabbitMq;
 
-public class RabbitMqTopologyGenerator : IStartupTask
+internal class RabbitMqTopologyGenerator : IStartupTask
 {
     private readonly IChannelProvider _channelProvider;
     private readonly RabbitMqOptions _options;

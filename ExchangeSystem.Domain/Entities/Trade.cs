@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using ExchangeSystem.Domain.Abstractions;
 
 namespace ExchangeSystem.Domain.Entities;
 

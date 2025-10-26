@@ -1,6 +1,6 @@
 ﻿namespace ExchangeSystem.Application.Models;
 
-public class ExecuteTradeRequest
+public class TradeDto
 {
     public string ClientId { get; init; }
     public string Symbol { get; init; }

@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace ExchangeSystem.Infrastructure.RabbitMq;
 
-public sealed class RabbitMqBase: IChannelProvider, IAsyncDisposable
+internal sealed class RabbitMqBase: IChannelProvider, IAsyncDisposable
 {
     private readonly ConnectionFactory _factory;
     private IConnection? _connection;

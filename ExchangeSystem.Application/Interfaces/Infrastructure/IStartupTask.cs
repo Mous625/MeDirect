@@ -1,4 +1,4 @@
-﻿namespace ExchangeSystem.Application.Interfaces;
+﻿namespace ExchangeSystem.Application.Interfaces.Infrastructure;
 
 public interface IStartupTask
 {

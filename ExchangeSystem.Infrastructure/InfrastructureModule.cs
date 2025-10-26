@@ -1,5 +1,5 @@
 ﻿using ExchangeSystem.Application.Interfaces;
-using ExchangeSystem.Domain.Abstractions;
+using ExchangeSystem.Application.Interfaces.Infrastructure;
 using ExchangeSystem.Infrastructure.Database;
 using ExchangeSystem.Infrastructure.RabbitMq;
 using ExchangeSystem.Infrastructure.RabbitMq.Interfaces;

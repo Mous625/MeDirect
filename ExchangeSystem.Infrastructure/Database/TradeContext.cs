@@ -1,4 +1,6 @@
-﻿using ExchangeSystem.Domain.Abstractions;
+﻿using ExchangeSystem.Application.Exceptions;
+using ExchangeSystem.Application.Interfaces;
+using ExchangeSystem.Application.Interfaces.Infrastructure;
 using ExchangeSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,6 +18,38 @@ public class TradeContext : DbContext, ITradeRepository
         _logger = logger;
     }
     
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(TradeContext).Assembly);
+    }
+    
+    public async Task<Trade?> GetAsync(Guid tradeId)
+    {
+        try
+        {
+            var trade = await Trades.FindAsync(tradeId);
+            return trade;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occured whilst creating a new trade.");
+            throw new RetrieveTradeException();
+        }
+    }
+    
+    public async Task<List<Trade>> GetAllAsync()
+    {
+        try
+        {
+            return await Trades.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occured whilst creating a new trade.");
+            throw new RetrieveTradeException();
+        }
+    }
+    
     public async Task AddAsync(Trade trade)
     {
         try
@@ -27,6 +61,7 @@ public class TradeContext : DbContext, ITradeRepository
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured whilst creating a new trade.");
+            throw new PublishTradeFailedException();
         }
     }
 }

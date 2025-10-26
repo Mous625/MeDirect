@@ -1,6 +1,6 @@
 ﻿using ExchangeSystem.Domain.Entities;
 
-namespace ExchangeSystem.Domain.Abstractions;
+namespace ExchangeSystem.Application.Interfaces.Infrastructure;
 
 public interface IQueuePublisher
 {

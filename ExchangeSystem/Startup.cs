@@ -1,4 +1,5 @@
 ﻿using ExchangeSystem.Application.Interfaces;
+using ExchangeSystem.Application.Interfaces.Infrastructure;
 
 namespace ExchangeSystem;
 

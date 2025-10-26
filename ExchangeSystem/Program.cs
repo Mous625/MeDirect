@@ -1,6 +1,8 @@
 using ExchangeSystem;
 using ExchangeSystem.Application;
 using ExchangeSystem.Infrastructure;
+using ExchangeSystem.Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,5 +43,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<TradeContext>();
+    db.Database.Migrate();
+}
 
 app.Run();

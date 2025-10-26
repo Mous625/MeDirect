@@ -4,5 +4,7 @@ namespace ExchangeSystem.Application.Interfaces;
 
 public interface ITradeService
 {
-    Task ExecuteTrade(ExecuteTradeRequest request);
+    Task<OperationResult<string?>> ExecuteTradeAsync(TradeDto dto);
+    Task<OperationResult<TradeDto?>> GetTrade(Guid tradeId);
+    Task<OperationResult<List<TradeDto>>> GetTrades();
 }
