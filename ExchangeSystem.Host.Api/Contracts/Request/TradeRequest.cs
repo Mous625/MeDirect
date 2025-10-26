@@ -1,12 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using ExchangeSystem.Domain.Abstractions;
+﻿namespace ExchangeSystem.Host.Api.Contracts.Request;
 
-namespace ExchangeSystem.Domain.Entities;
-
-public class Trade
+public class TradeRequest
 {
-    [Key]
-    public Guid TradeId { get; init; }
     public required string ClientId { get; init; }
     public required string Symbol { get; init; }
     public required int Quantity { get; init; }

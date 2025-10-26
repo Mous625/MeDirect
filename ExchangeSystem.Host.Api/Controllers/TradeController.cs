@@ -1,6 +1,6 @@
 ﻿using ExchangeSystem.Application.Interfaces;
 using ExchangeSystem.Application.Models;
-using ExchangeSystem.Host.Api.Models.Request;
+using ExchangeSystem.Host.Api.Contracts.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExchangeSystem.Host.Api.Controllers;
@@ -17,7 +17,7 @@ public class TradeController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> GetWeatherForecast([FromBody] TradeRequest request)
+    public async Task<IActionResult> CreateTrade([FromBody] TradeRequest request)
     {
         var applicationRequest = new ExecuteTradeRequest()
         {

@@ -14,7 +14,7 @@ builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 
 builder.Services.ConfigureApplicationServices(builder.Configuration);
 
-builder.Services.AddHostedService<StartupWorker>();
+builder.Services.AddHostedService<Startup>();
 
 var app = builder.Build();
 

@@ -1,18 +1,20 @@
-﻿using ExchangeSystem.Domain.Abstractions;
+﻿using ExchangeSystem.Application.Interfaces;
 
 namespace ExchangeSystem;
 
-public sealed class StartupWorker : BackgroundService
+public class Startup : IHostedService
 {
-    private readonly IQueueServiceHandler _queue;
-
-    public StartupWorker(IQueueServiceHandler queue)
+    private readonly IStartupTask _startupTask;
+    
+    public Startup(IStartupTask startupTask)
     {
-        _queue = queue;
+        _startupTask = startupTask;
     }
-
-    protected override async Task ExecuteAsync(CancellationToken ct)
+    
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await _queue.StartAsync(ct);
+        await _startupTask.ExecuteAsync(cancellationToken);
     }
+    
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

@@ -1,6 +1,9 @@
-﻿using ExchangeSystem.Domain.Abstractions;
+﻿using ExchangeSystem.Application.Interfaces;
+using ExchangeSystem.Domain.Abstractions;
 using ExchangeSystem.Infrastructure.Database;
-using ExchangeSystem.Infrastructure.Rabbit;
+using ExchangeSystem.Infrastructure.RabbitMq;
+using ExchangeSystem.Infrastructure.RabbitMq.Interfaces;
+using ExchangeSystem.Infrastructure.RabbitMq.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +14,23 @@ public static class InfrastructureModule
 {
     public static void ConfigureInfrastructureServices(this IServiceCollection services, IConfiguration config)
     {
-        services.AddDbContext<TradeContext>(options => 
-            options.UseMySql(config["Database:ConnectionString"], ServerVersion.AutoDetect(config["Database:ConnectionString"])));
-        
+        var databaseConnectionString = config["Database:ConnectionString"] ??
+                                       throw new InvalidOperationException("Database:ConnectionString");
+
+        services.AddDbContext<TradeContext>(options =>
+            options.UseMySql(databaseConnectionString, ServerVersion.AutoDetect(databaseConnectionString)));
+
         services.AddScoped<ITradeRepository, TradeContext>();
 
-        services.AddSingleton<IQueueServiceHandler, RabbitMqBase>();
-    }     
+        services.AddOptions<RabbitMqOptions>()
+            .Bind(config.GetSection("RabbitMq"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        
+        services.AddSingleton<IStartupTask, RabbitMqTopologyGenerator>();
+
+        services.AddSingleton<IChannelProvider, RabbitMqBase>();
+
+        services.AddSingleton<IQueuePublisher, RabbitMqPublisher>();
+    }
 }
