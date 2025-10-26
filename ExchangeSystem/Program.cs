@@ -1,6 +1,7 @@
 using ExchangeSystem;
 using ExchangeSystem.Application;
 using ExchangeSystem.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,18 @@ builder.Services.ConfigureInfrastructureServices(builder.Configuration);
 builder.Services.ConfigureApplicationServices(builder.Configuration);
 
 builder.Services.AddHostedService<Startup>();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore", Serilog.Events.LogEventLevel.Warning)
+    .MinimumLevel.Override("System", Serilog.Events.LogEventLevel.Warning)
+    .Enrich.FromLogContext()
+    .WriteTo.Console(outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] ({SourceContext}) {Message:lj} {Properties:j}{NewLine}{Exception}")
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

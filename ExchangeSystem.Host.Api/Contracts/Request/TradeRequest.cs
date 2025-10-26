@@ -2,6 +2,7 @@
 
 public class TradeRequest
 {
+    public Guid CorrelationId { get; init; }
     public required string ClientId { get; init; }
     public required string Symbol { get; init; }
     public required int Quantity { get; init; }
