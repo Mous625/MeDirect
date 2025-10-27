@@ -17,6 +17,39 @@ The system provides:
 
 - A correlation ID system to trace logs across distributed services
 
+The API contains 4 endpoints: 
+- /Trades/{tradeId} [GET]
+- /Trades/client/{clientId} [GET]
+- /Trades [POST]
+- /Health [GET] - for docker
+
+The database isn't automatically seeded with data. Please execute a trade first using the POST endpoint,<br/> 
+then the other endpoints can be used by using the response (TradeId) or the ClientId used in the request. <br />
+
+
+Sample Correlation ID:
+`08de1591-9bec-4b27-84fc-9d53f65dbe67`
+
+Sample JSON paylod for /Trades endpoint (POST) (endpoint to execute a trade):
+`{
+  "clientId": "123abc",
+  "symbol": "ABC",
+  "quantity": 1,
+  "price": 10
+}`
+
+## How To Run:
+
+From the root folder: MeDirect
+
+Run `docker compose up --build`
+
+- API available at http://localhost:8080/swagger/index.html
+- RMQ management console: http://localhost:15672/#/
+- Consumer Application outputs logs to the console running the docker compose
+
+The shell will output `exchange-consumer  | Consumer: Waiting for logs.` when everything is ready.
+
 ## Architecture
 
 This project follows the Onion Architecture pattern to ensure a clean separation of concerns and maintainable code.
@@ -49,26 +82,3 @@ This project follows the Onion Architecture pattern to ensure a clean separation
 - Serilog
 - Docker
 - NUnit
-
-## How To Run:
-
-From the root folder: MeDirect
-
-Run `docker compose up --build`
-
-- API available at http://localhost:8080/swagger/index.html
-- RMQ management console: http://localhost:15672/#/
-- Consumer Application outputs logs to the console running the docker compose
-
-The shell will output `exchange-consumer  | Consumer: Waiting for logs.` when everything is ready.
-
-Sample Correlation ID:
-`08de1591-9bec-4b27-84fc-9d53f65dbe67`
-
-Sample JSON paylod for /Trades endpoint (POST) (endpoint to execute a trade):
-`{
-  "clientId": "123abc",
-  "symbol": "ABC",
-  "quantity": 1,
-  "price": 10
-}`
