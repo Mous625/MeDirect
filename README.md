@@ -59,3 +59,16 @@ Run `docker compose up --build`
 - API available at http://localhost:8080/swagger/index.html
 - RMQ management console: http://localhost:15672/#/
 - Consumer Application outputs logs to the console running the docker compose
+
+The shell will output `exchange-consumer  | Consumer: Waiting for logs.` when everything is ready.
+
+Sample Correlation ID:
+`08de1591-9bec-4b27-84fc-9d53f65dbe67`
+
+Sample JSON paylod for /Trades endpoint (POST) (endpoint to execute a trade):
+`{
+  "clientId": "123abc",
+  "symbol": "ABC",
+  "quantity": 1,
+  "price": 10
+}`
