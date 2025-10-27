@@ -40,7 +40,7 @@ Sample JSON paylod for /Trades endpoint (POST) (endpoint to execute a trade):
 
 ## How To Run:
 
-From the root folder: MeDirect
+From the root folder:
 
 Run `docker compose up --build`
 
