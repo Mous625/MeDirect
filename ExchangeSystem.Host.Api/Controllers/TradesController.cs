@@ -62,7 +62,7 @@ public class TradesController : ControllerBase
         }
     }
 
-    [HttpGet]
+    [HttpGet("client/{clientId}")]
     public async Task<IActionResult> GetTradesForClient([FromHeader] Guid correlationId, [FromRoute] string clientId)
     {
         using (_logger.BeginScope(new Dictionary<string, object?>

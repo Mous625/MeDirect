@@ -38,8 +38,6 @@ services:
       dockerfile: Dockerfile.api
     container_name: exchange-api
     environment:
-      # API hosting
-      # ASPNETCORE_URLS: http://+:8080
       Database__ConnectionString: "Server=mysql;Port=3306;Database=trades;User=root;Password=pass;"
       RabbitMq__HostName: rabbitmq
       RabbitMq__ExchangeName: trades-exchange
@@ -53,7 +51,12 @@ services:
         condition: service_healthy
       mysql:
         condition: service_healthy
-
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'cat < /dev/null > /dev/tcp/localhost/8080'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      
   consumer:
     build:
       context: .
@@ -70,6 +73,8 @@ services:
         condition: service_healthy
       mysql:
         condition: service_healthy
-
+      api:
+        condition: service_healthy
+        
 volumes:
   mysql_data:
