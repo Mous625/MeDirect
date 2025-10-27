@@ -1,6 +1,6 @@
-﻿namespace ExchangeSystem.Application.Models;
+﻿namespace ExchangeSystem.Host.Api.Contracts.Response;
 
-public class TradeDto
+public class TradeResponse
 {
     public Guid TradeId { get; init; }
     public required string ClientId { get; init; }

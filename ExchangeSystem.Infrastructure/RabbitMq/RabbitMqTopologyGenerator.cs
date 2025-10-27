@@ -23,22 +23,22 @@ internal class RabbitMqTopologyGenerator : IStartupTask
         var channel = await _channelProvider.CreateAndGetChannelIfNotExistsAsync(CancellationToken.None);
 
         await channel.ExchangeDeclareAsync(
-            exchange: _options.RoutingKey, 
-            durable: true, 
-            type: ExchangeType.Fanout,
+            exchange: _options.ExchangeName,
+            durable: true,
+            type: _options.ExchangeType,
             cancellationToken: cancellationToken);
 
         await channel.QueueDeclareAsync(
             queue: _options.QueueName,
             durable: true,
             exclusive: false,
-            autoDelete: false, 
+            autoDelete: false,
             cancellationToken: cancellationToken);
 
         await channel.QueueBindAsync(
-            queue: _options.QueueName, 
+            queue: _options.QueueName,
             exchange: _options.ExchangeName,
-            routingKey: _options.RoutingKey, 
+            routingKey: _options.RoutingKey,
             cancellationToken: cancellationToken);
     }
 }

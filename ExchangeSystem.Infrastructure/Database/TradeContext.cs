@@ -37,11 +37,11 @@ public class TradeContext : DbContext, ITradeRepository
         }
     }
     
-    public async Task<List<Trade>> GetAllAsync()
+    public async Task<List<Trade>> GetAllByClientIdAsync(string clientId)
     {
         try
         {
-            return await Trades.ToListAsync();
+            return await Trades.Where(c => c.ClientId == clientId).ToListAsync();
         }
         catch (Exception ex)
         {
@@ -56,7 +56,6 @@ public class TradeContext : DbContext, ITradeRepository
         {
             Trades.Add(trade);
             await SaveChangesAsync();
-            
         }
         catch (Exception ex)
         {

@@ -1,0 +1,75 @@
+version: "3.9"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     # AMQP
+      - "15672:15672"   # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql:
+    image: mysql
+    container_name: trades-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: trades
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppass"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: exchange-api
+    environment:
+      # API hosting
+      # ASPNETCORE_URLS: http://+:8080
+      Database__ConnectionString: "Server=mysql;Port=3306;Database=trades;User=root;Password=pass;"
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__ExchangeName: trades-exchange
+      RabbitMq__ExchangeType: direct
+      RabbitMq__QueueName: trades-queue
+      RabbitMq__RoutingKey: trades.routed
+    ports:
+      - "8080:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    container_name: exchange-consumer
+    environment:
+      RabbitMq__HostName: rabbitmq
+      RabbitMq__ExchangeName: trades-exchange
+      RabbitMq__ExchangeType: direct
+      RabbitMq__QueueName: trades-queue
+      RabbitMq__RoutingKey: trades.routed
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

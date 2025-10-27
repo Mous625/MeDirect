@@ -19,4 +19,9 @@
       <PackageReference Include="RabbitMQ.Client" Version="7.1.2" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="ExchangeSystem.UnitTests" />
+        <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    </ItemGroup>
+
 </Project>

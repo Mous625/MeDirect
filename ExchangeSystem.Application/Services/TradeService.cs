@@ -30,7 +30,7 @@ public class TradeService : ITradeService
         await _tradeRepository.AddAsync(trade);
         await _queuePublisher.PublishTradeAsync(trade);
         
-        return new OperationResult<string?> { Result = trade.TradeId.ToString() };
+        return new OperationResult<string?> { Result = trade.Id.ToString() };
     }
 
     public async Task<OperationResult<TradeDto?>> GetTrade(Guid tradeId)
@@ -40,6 +40,7 @@ public class TradeService : ITradeService
         var tradeDto = trade != null
             ? new TradeDto
             {
+                TradeId = trade.Id,
                 ClientId = trade.ClientId,
                 Price = trade.Price,
                 Quantity = trade.Quantity,
@@ -50,16 +51,17 @@ public class TradeService : ITradeService
         return new OperationResult<TradeDto?> { Result = tradeDto };
     }
 
-    public async Task<OperationResult<List<TradeDto>>> GetTrades()
+    public async Task<OperationResult<List<TradeDto>>> GetTradesForClient(string clientId)
     {
-        var trades = await _tradeRepository.GetAllAsync();
+        var trades = await _tradeRepository.GetAllByClientIdAsync(clientId);
             
-        List<TradeDto> tradesDto = trades.Select(x => new TradeDto
+        List<TradeDto> tradesDto = trades.Select(trade => new TradeDto
         {
-            ClientId = x.ClientId,
-            Price = x.Price,
-            Quantity = x.Quantity,
-            Symbol = x.Symbol
+            TradeId = trade.Id,
+            ClientId = trade.ClientId,
+            Price = trade.Price,
+            Quantity = trade.Quantity,
+            Symbol = trade.Symbol
         }).ToList();
         
         return new OperationResult<List<TradeDto>> { Result = tradesDto };

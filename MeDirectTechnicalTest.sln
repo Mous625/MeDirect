@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSystem.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSystem.Domain", "ExchangeSystem.Domain\ExchangeSystem.Domain.csproj", "{F861E322-726B-4025-9630-C13C67C648CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMqConsumer", "RabbitMqConsumer\RabbitMqConsumer.csproj", "{334975FF-1037-4E67-BE92-EE172AF649E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExchangeSystem.UnitTests", "ExchangeSystem.UnitTests\ExchangeSystem.UnitTests.csproj", "{55EE92A9-31A6-4247-ABED-B3522F15C581}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{F861E322-726B-4025-9630-C13C67C648CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F861E322-726B-4025-9630-C13C67C648CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F861E322-726B-4025-9630-C13C67C648CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{334975FF-1037-4E67-BE92-EE172AF649E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{334975FF-1037-4E67-BE92-EE172AF649E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{334975FF-1037-4E67-BE92-EE172AF649E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{334975FF-1037-4E67-BE92-EE172AF649E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55EE92A9-31A6-4247-ABED-B3522F15C581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55EE92A9-31A6-4247-ABED-B3522F15C581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55EE92A9-31A6-4247-ABED-B3522F15C581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55EE92A9-31A6-4247-ABED-B3522F15C581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

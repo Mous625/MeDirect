@@ -13,7 +13,7 @@ internal sealed class RabbitMqBase: IChannelProvider, IAsyncDisposable
 
     public RabbitMqBase(IOptions<RabbitMqOptions> rabbitMqOptions)
     {
-       _factory = new ConnectionFactory { HostName = rabbitMqOptions.Value.ConnectionString };
+       _factory = new ConnectionFactory { HostName = rabbitMqOptions.Value.HostName };
     }
     
     public async Task<IChannel> CreateAndGetChannelIfNotExistsAsync(CancellationToken ct)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ExchangeSystem.Infrastructure.RabbitMq.Options;
+namespace RabbitMqConsumer;
 
 internal sealed class RabbitMqOptions
 {

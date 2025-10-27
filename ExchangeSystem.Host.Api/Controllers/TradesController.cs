@@ -10,12 +10,12 @@ namespace ExchangeSystem.Host.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class TradeController : ControllerBase
+public class TradesController : ControllerBase
 {
     private readonly ITradeService _tradeService;
-    private readonly ILogger<TradeController> _logger;
+    private readonly ILogger<TradesController> _logger;
 
-    public TradeController(ITradeService tradeService, ILogger<TradeController> logger)
+    public TradesController(ITradeService tradeService, ILogger<TradesController> logger)
     {
         _tradeService = tradeService;
         _logger = logger;
@@ -40,7 +40,16 @@ public class TradeController : ControllerBase
                     return NotFound();
                 }
 
-                return Ok(tradeOperation.Result);
+                var tradeResponse = new TradeResponse
+                {
+                    TradeId = tradeOperation.Result.TradeId,
+                    ClientId = tradeOperation.Result.ClientId,
+                    Symbol = tradeOperation.Result.Symbol,
+                    Quantity = tradeOperation.Result.Quantity,
+                    Price = tradeOperation.Result.Price,
+                };
+                
+                return Ok(tradeResponse);
             }
             catch (RetrieveTradeException)
             {
@@ -54,7 +63,7 @@ public class TradeController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTrades([FromHeader] Guid correlationId)
+    public async Task<IActionResult> GetTradesForClient([FromHeader] Guid correlationId, [FromRoute] string clientId)
     {
         using (_logger.BeginScope(new Dictionary<string, object?>
                {
@@ -62,11 +71,21 @@ public class TradeController : ControllerBase
                }))
         {
             _logger.LogInformation("Get trades request received;");
+            
             try
             {
-                var trades = await _tradeService.GetTrades();
+                var trades = await _tradeService.GetTradesForClient(clientId);
 
-                return Ok(trades);
+                var response = trades.Result?.Select(x => new TradeResponse()
+                {
+                    TradeId = x.TradeId,
+                    ClientId = x.ClientId,
+                    Symbol = x.Symbol,
+                    Quantity = x.Quantity,
+                    Price = x.Price,
+                }).ToList();
+
+                return Ok(response);
             }
             catch (RetrieveTradeException)
             {

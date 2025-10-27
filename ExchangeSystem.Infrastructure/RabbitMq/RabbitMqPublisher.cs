@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
 using ExchangeSystem.Application.Exceptions;
-using ExchangeSystem.Application.Interfaces;
 using ExchangeSystem.Application.Interfaces.Infrastructure;
 using ExchangeSystem.Domain.Entities;
 using ExchangeSystem.Infrastructure.RabbitMq.Interfaces;
@@ -17,7 +16,9 @@ internal class RabbitMqPublisher : IQueuePublisher
     private readonly IChannelProvider _channelProvider;
     private readonly RabbitMqOptions _rabbitMqOptions;
     private readonly ILogger<RabbitMqPublisher> _logger;
-    public RabbitMqPublisher(IChannelProvider channelProvider, IOptions<RabbitMqOptions> options, ILogger<RabbitMqPublisher> logger)
+
+    public RabbitMqPublisher(IChannelProvider channelProvider, IOptions<RabbitMqOptions> options,
+        ILogger<RabbitMqPublisher> logger)
     {
         _channelProvider = channelProvider;
         _rabbitMqOptions = options.Value;

@@ -33,14 +33,15 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Commented for DEMO purposes
+// if (app.Environment.IsDevelopment())
+// {
+app.UseSwagger();
+app.UseSwaggerUI();
+// }
 
-app.UseHttpsRedirection();
+// Commented for DEMO purposes
+// app.UseHttpsRedirection();
 
 app.MapControllers();
 
