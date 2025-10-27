@@ -24,20 +24,25 @@ This project follows the Onion Architecture pattern to ensure a clean separation
 ## Layers
 
 - Domain Layer (ExchangeSystem.Domain)
+
   - Contains core business models and domain logic.
 
 - Application Layer (ExchangeSystem.Application)
+
   - Contains service interfaces, application logic, and DTOs.
 
 - Infrastructure Layer (ExchangeSystem.Infrastructure)
+
   - Implements database access using Entity Framework Core and handles external integrations such as RabbitMQ.
 
 - API Layer (ExchangeSystem.Host.Api)
+
   - Exposes the RESTful endpoint for trade execution and retrieval.
 
 - Test Layer (ExchangeSystem.UnitTests)
 
 ## Technologies Used
+
 - C# (.NET 8)
 - RabbitMQ
 - MySQL
@@ -47,7 +52,7 @@ This project follows the Onion Architecture pattern to ensure a clean separation
 
 ## How To Run:
 
-From the root folder: MeDirectAssessment
+From the root folder: MeDirect
 
 Run `docker compose up --build`
 
